@@ -1,5 +1,6 @@
 import re
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urljoin, urldefrag
+from bs4 import BeautifulSoup
 
 def scraper(url, resp):
     links = extract_next_links(url, resp)
@@ -15,7 +16,20 @@ def extract_next_links(url, resp):
     #         resp.raw_response.url: the url, again
     #         resp.raw_response.content: the content of the page!
     # Return a list with the hyperlinks (as strings) scrapped from resp.raw_response.content
-    return list()
+    links = []
+
+    if resp.status != 200:
+        return links
+
+    html = resp.raw_response.content
+    soup = BeautifulSoup(html, "html.parser")
+
+    for tag in soup.find_all("a", href=True):
+        href = tag.get("href")
+        link, _ = urldefrag(urljoin(resp.url, href))
+        links.append(link)
+
+    return links
 
 def is_valid(url):
     # Decide whether to crawl this url or not. 
@@ -38,3 +52,30 @@ def is_valid(url):
     except TypeError:
         print ("TypeError for ", parsed)
         raise
+
+# if __name__ == "__main__":
+#     class TestRawResponse:
+#         def __init__(self, content):
+#             self.content = content
+    
+#     class TestResponse:
+#         def __init__(self, url, status, content):
+#             self.url = url
+#             self.status = status
+#             self.raw_response = TestRawResponse(content)
+    
+#     response1 = TestResponse(url = "https://ics.uci.edu/", status = 200,
+#         content = """<a href="/research-areas/"</a>""") # Partial url
+#     response2 = TestResponse(url = "https://ics.uci.edu/", status = 200,
+#         content = """<a href="#a11y-skip-link-content"</a>""") # Fragment only
+#     response3 = TestResponse(url = "https://ics.uci.edu/", status = 200,
+#         content = """<a href="https://ics.uci.edu/facts-figures/ics-mission-history/"</a>""") # Full url
+#     response4 = TestResponse(url = "https://ics.uci.edu/", status = 400,
+#         content = """<a href="https://ics.uci.edu/facts-figures/ics-mission-history/"</a>""") # Status is not 200
+
+#     links = []
+#     links += extract_next_links("https://ics.uci.edu/", response1) # ['https://ics.uci.edu/research-areas/']
+#     links += extract_next_links("https://ics.uci.edu/", response2) # ['https://ics.uci.edu/']
+#     links += extract_next_links("https://ics.uci.edu/", response3) # ['https://ics.uci.edu/facts-figures/ics-mission-history/']
+#     links += extract_next_links("https://ics.uci.edu/", response4) # []
+#     print(links)
