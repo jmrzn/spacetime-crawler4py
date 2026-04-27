@@ -39,6 +39,14 @@ def is_valid(url):
         parsed = urlparse(url)
         if parsed.scheme not in set(["http", "https"]):
             return False
+        
+        print(parsed.netloc.lower())
+
+        # Only crawls in specified domains 
+        if not re.match(r".*\.(ics|cs|informatics|stat)\.uci\.edu$", parsed.netloc.lower()):
+            if not re.match(r"(ics|cs|informatics|stat)\.uci\.edu$", parsed.netloc.lower()):
+                return False
+        
         return not re.match(
             r".*\.(css|js|bmp|gif|jpe?g|ico"
             + r"|png|tiff?|mid|mp2|mp3|mp4"
@@ -79,3 +87,8 @@ def is_valid(url):
 #     links += extract_next_links("https://ics.uci.edu/", response3) # ['https://ics.uci.edu/facts-figures/ics-mission-history/']
 #     links += extract_next_links("https://ics.uci.edu/", response4) # []
 #     print(links)
+# print(is_valid("https://wics.ics.uci.edu/")) # True
+# print(is_valid("https://ics.uci.edu/")) # True
+# print(is_valid("https://www.instagram.com/wicsuci/")) # False
+# print(is_valid("https://ics.uci.edu/event/building-worker-resilience-in-place-based-communities-amid-rapid-technological-change-april/")) #True
+
