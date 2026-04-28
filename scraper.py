@@ -40,12 +40,16 @@ def is_valid(url):
         if parsed.scheme not in set(["http", "https"]):
             return False
         
-        print(parsed.netloc.lower())
-
         # Only crawls in specified domains 
         if not re.match(r".*\.(ics|cs|informatics|stat)\.uci\.edu$", parsed.netloc.lower()):
             if not re.match(r"(ics|cs|informatics|stat)\.uci\.edu$", parsed.netloc.lower()):
                 return False
+        
+        if "grape.ics.uci.edu" in parsed.netloc.lower():
+            return False
+        
+        if "/event/" or "/~eppstein/pix/" in parsed.path.lower():
+            return False
         
         return not re.match(
             r".*\.(css|js|bmp|gif|jpe?g|ico"
