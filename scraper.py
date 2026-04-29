@@ -2,6 +2,8 @@ import re
 from urllib.parse import urlparse, urljoin, urldefrag
 from bs4 import BeautifulSoup
 
+MAX_SIZE = 1024 * 1024 * 15 # 15 MB
+
 def scraper(url, resp):
     links = extract_next_links(url, resp)
     return [link for link in links if is_valid(link)]
@@ -20,6 +22,13 @@ def extract_next_links(url, resp):
 
     if resp.status != 200:
         return links
+        
+    # checks the size of the page before extracting
+    headers = resp.raw_response.headers
+    size = headers.get("Content-Length")
+
+    if size and int(size) > MAX_SIZE:
+        return [] 
 
     html = resp.raw_response.content
     soup = BeautifulSoup(html, "html.parser")
