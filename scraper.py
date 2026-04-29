@@ -40,6 +40,8 @@ def is_valid(url):
         if parsed.scheme not in set(["http", "https"]):
             return False
         
+        # print(parsed.path.lower())
+  
         # Only crawls in specified domains 
         if not re.match(r".*\.(ics|cs|informatics|stat)\.uci\.edu$", parsed.netloc.lower()):
             if not re.match(r"(ics|cs|informatics|stat)\.uci\.edu$", parsed.netloc.lower()):
@@ -48,9 +50,12 @@ def is_valid(url):
         if "grape.ics.uci.edu" in parsed.netloc.lower():
             return False
         
-        if "/event/" or "/~eppstein/pix/" in parsed.path.lower():
+        if "/events/" in parsed.path.lower() or "/~eppstein/pix/" in parsed.path.lower():
             return False
-        
+
+        if re.match(r".*(\?|&)(do|rev|media|idx)=.*", url.lower()):
+            return False
+
         return not re.match(
             r".*\.(css|js|bmp|gif|jpe?g|ico"
             + r"|png|tiff?|mid|mp2|mp3|mp4"
@@ -95,4 +100,10 @@ def is_valid(url):
 # print(is_valid("https://ics.uci.edu/")) # True
 # print(is_valid("https://www.instagram.com/wicsuci/")) # False
 # print(is_valid("https://ics.uci.edu/event/building-worker-resilience-in-place-based-communities-amid-rapid-technological-change-april/")) #True
+# print(is_valid("https://grape.ics.uci.edu/"))
+# print(is_valid("https://ics.uci.edu/~eppstein/pix/action/index.html"))
 
+
+# print(is_valid("http://intranet.ics.uci.edu/doku.php/login?")) # True
+# print(is_valid("http://intranet.ics.uci.edu/doku.php/login?do=export_pdf&rev=1767734967")) # False
+# print(is_valid("http://intranet.ics.uci.edu/doku.php/login?do=diff&rev2%5B0%5D=1767734977&rev2%5B1%5D=1767735104&difftype=sidebyside"))
