@@ -47,9 +47,6 @@ def is_valid(url):
             if not re.match(r"(ics|cs|informatics|stat)\.uci\.edu$", parsed.netloc.lower()):
                 return False
         
-        if "grape.ics.uci.edu" in parsed.netloc.lower():
-            return False
-        
         if "/events/" in parsed.path.lower() or "/~eppstein/pix/" in parsed.path.lower():
             return False
 
