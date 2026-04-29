@@ -2,7 +2,7 @@ import re
 from urllib.parse import urlparse, urljoin, urldefrag
 from bs4 import BeautifulSoup
 
-MAX_SIZE = 1024 * 1024 * 15 # 15 MB
+# MAX_SIZE = 1024 * 1024 * 15 # 15 MB
 
 def scraper(url, resp):
     links = extract_next_links(url, resp)
@@ -20,16 +20,16 @@ def extract_next_links(url, resp):
     # Return a list with the hyperlinks (as strings) scrapped from resp.raw_response.content
     links = []
 
-    if resp.status != 200:
+    if not is_valid_resp(resp):
         return links
-        
+
     # checks the size of the page before extracting
-    headers = resp.raw_response.headers
-    size = headers.get("Content-Length")
+    # headers = resp.raw_response.headers
+    # size = headers.get("Content-Length")
 
-    if size and int(size) > MAX_SIZE:
-        return [] 
-
+    # if size and int(size) > MAX_SIZE:
+    #     return []
+    
     html = resp.raw_response.content
     soup = BeautifulSoup(html, "html.parser")
 
@@ -70,6 +70,12 @@ def is_valid(url):
         print ("TypeError for ", parsed)
         raise
 
+def is_valid_resp(resp):
+    return (resp.status == 200 and
+            resp.raw_response and
+            resp.raw_response.content and
+            len(resp.raw_response.content.strip()) > 0)
+
 # if __name__ == "__main__":
 #     class TestRawResponse:
 #         def __init__(self, content):
@@ -81,21 +87,24 @@ def is_valid(url):
 #             self.status = status
 #             self.raw_response = TestRawResponse(content)
     
-#     response1 = TestResponse(url = "https://ics.uci.edu/", status = 200,
-#         content = """<a href="/research-areas/"</a>""") # Partial url
-#     response2 = TestResponse(url = "https://ics.uci.edu/", status = 200,
-#         content = """<a href="#a11y-skip-link-content"</a>""") # Fragment only
-#     response3 = TestResponse(url = "https://ics.uci.edu/", status = 200,
-#         content = """<a href="https://ics.uci.edu/facts-figures/ics-mission-history/"</a>""") # Full url
-#     response4 = TestResponse(url = "https://ics.uci.edu/", status = 400,
-#         content = """<a href="https://ics.uci.edu/facts-figures/ics-mission-history/"</a>""") # Status is not 200
+    # response1 = TestResponse(url = "https://ics.uci.edu/", status = 200,
+    #     content = """<a href="/research-areas/"</a>""") # Partial url
+    # response2 = TestResponse(url = "https://ics.uci.edu/", status = 200,
+    #     content = """<a href="#a11y-skip-link-content"</a>""") # Fragment only
+    # response3 = TestResponse(url = "https://ics.uci.edu/", status = 200,
+    #     content = """<a href="https://ics.uci.edu/facts-figures/ics-mission-history/"</a>""") # Full url
+    # response4 = TestResponse(url = "https://ics.uci.edu/", status = 400,
+    #     content = """<a href="https://ics.uci.edu/facts-figures/ics-mission-history/"</a>""") # Status is not 200
+    # response5 = TestResponse(url = "https://ics.uci.edu/", status = 200,
+    #     content = "") # Status is 200, but no data
 
-#     links = []
-#     links += extract_next_links("https://ics.uci.edu/", response1) # ['https://ics.uci.edu/research-areas/']
-#     links += extract_next_links("https://ics.uci.edu/", response2) # ['https://ics.uci.edu/']
-#     links += extract_next_links("https://ics.uci.edu/", response3) # ['https://ics.uci.edu/facts-figures/ics-mission-history/']
-#     links += extract_next_links("https://ics.uci.edu/", response4) # []
-#     print(links)
+    # links = []
+    # links += extract_next_links("https://ics.uci.edu/", response1) # ['https://ics.uci.edu/research-areas/']
+    # links += extract_next_links("https://ics.uci.edu/", response2) # ['https://ics.uci.edu/']
+    # links += extract_next_links("https://ics.uci.edu/", response3) # ['https://ics.uci.edu/facts-figures/ics-mission-history/']
+    # links += extract_next_links("https://ics.uci.edu/", response4) # []
+    # links += extract_next_links("https://ics.uci.edu/", response5) # []
+    # print(links)
 # print(is_valid("https://wics.ics.uci.edu/")) # True
 # print(is_valid("https://ics.uci.edu/")) # True
 # print(is_valid("https://www.instagram.com/wicsuci/")) # False
