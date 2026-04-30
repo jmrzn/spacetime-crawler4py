@@ -45,10 +45,13 @@ def extract_next_links(url, resp):
     # Extract hyperlinks from the HTML <a> tags
     # Defragment and join partial URLs
     for tag in soup.find_all("a", href=True):
-        href = tag.get("href")
-        link, _ = urldefrag(urljoin(resp.url, href))
-        links.append(link)
-
+        try:
+            href = tag.get("href")
+            link, _ = urldefrag(urljoin(resp.url, href))
+            links.append(link)
+        except ValueError:
+            continue
+    
     return links
 
 def is_valid(url):
