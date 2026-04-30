@@ -42,15 +42,45 @@ def is_valid(url):
         
         # print(parsed.path.lower())
   
-        # Only crawls in specified domains 
-        if not re.match(r".*\.(ics|cs|informatics|stat)\.uci\.edu$", parsed.netloc.lower()):
-            if not re.match(r"(ics|cs|informatics|stat)\.uci\.edu$", parsed.netloc.lower()):
+        domain = parsed.netloc.lower()
+
+        # Only crawls in specified domains (first checks if domain under one of the specificed domains and then check if it is one of the main domains)
+        if not re.match(r".*\.(ics|cs|informatics|stat)\.uci\.edu$", domain):
+            if not re.match(r"(ics|cs|informatics|stat)\.uci\.edu$", domain):
                 return False
         
-        if "/events/" in parsed.path.lower() or "/~eppstein/pix/" in parsed.path.lower():
+        # Avoides grape.ics.uci.edu - not useful
+        if domain == "grape.ics.uci.edu":
+            return False 
+        
+        # avoid this - behind a login, site itself isn't valuable, just a buch of queries
+        if domain == "dale-cooper-v0.ics.uci.edu":
             return False
+        
+        # behind login
+        if domain == "helpdesk.ics.uci.edu":
+            return False
+        
+        path = parsed.path.lower()
+        # print(path)
 
-        if re.match(r".*(\?|&)(do|rev|media|idx)=.*", url.lower()):
+        # Bunch of wiki paths that are behind login
+        if domain == "wiki.ics.uci.edu":
+            if "services" in path or "requesttracker" in path or "network" in path or "hardware" in path or "group" in path:
+                return False
+        
+        # Leads to data filed (?)
+        if "/~baldig/learning" in path:
+            return False
+        
+        # Avoid events (calendar) links, eppstein/pix (bunch of picture links)
+        if "/events/" in path or "/~eppstein/pix/" in path:
+            return False
+        
+# entry point 
+
+        # checks for these php queries that can't be reached
+        if re.match(r".*(\?|&)(do|rev|media|idx|share)=.*", url.lower()):
             return False
 
         return not re.match(
@@ -61,7 +91,7 @@ def is_valid(url):
             + r"|data|dat|exe|bz2|tar|msi|bin|7z|psd|dmg|iso"
             + r"|epub|dll|cnf|tgz|sha1"
             + r"|thmx|mso|arff|rtf|jar|csv"
-            + r"|rm|smil|wmv|swf|wma|zip|rar|gz)$", parsed.path.lower())
+            + r"|rm|smil|wmv|swf|wma|zip|rar|gz)$", path)
 
     except TypeError:
         print ("TypeError for ", parsed)
@@ -104,3 +134,5 @@ def is_valid(url):
 # print(is_valid("http://intranet.ics.uci.edu/doku.php/login?")) # True
 # print(is_valid("http://intranet.ics.uci.edu/doku.php/login?do=export_pdf&rev=1767734967")) # False
 # print(is_valid("http://intranet.ics.uci.edu/doku.php/login?do=diff&rev2%5B0%5D=1767734977&rev2%5B1%5D=1767735104&difftype=sidebyside"))
+# print(is_valid("https://dale-cooper-v0.ics.uci.edu/status?&lang=en&skin=skin-black&action=update&lang=en&skin=skin-black&action=update"))
+print(is_valid("https://wics.ics.uci.edu/fall-2025-week-8-wics-x-family-feud/?share=twitter"))
