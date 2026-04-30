@@ -101,8 +101,8 @@ def save_html(url, html):
 
     # Save HTML to file
     with open(path, "w") as f:
-        f.write(html)
-    
+        f.write(html.decode("utf-8", errors="ignore"))
+
     # Create jsonl file for URL mapping, if it doesn't already exist
     # Append URL and corresponding path
     with open(URL_MAP, "a") as m:
