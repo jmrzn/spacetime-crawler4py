@@ -49,9 +49,6 @@ def is_valid(url):
             if not re.match(r"(ics|cs|informatics|stat)\.uci\.edu$", domain):
                 return False
         
-        # Avoides grape.ics.uci.edu - not useful
-        if domain == "grape.ics.uci.edu":
-            return False 
         
         # avoid this - behind a login, site itself isn't valuable, just a buch of queries
         if domain == "dale-cooper-v0.ics.uci.edu":
@@ -68,8 +65,19 @@ def is_valid(url):
         if domain == "wiki.ics.uci.edu":
             if "services" in path or "requesttracker" in path or "network" in path or "hardware" in path or "group" in path:
                 return False
+            
+        # Avoides ngs.ics.uci.edu - not useful
+        if domain == "ngs.ics.uci.edu":
+            if "research" in path or "teaching" in path or "entrepreneurship" in path or "professionalsocial" in path:
+                return True 
+            return False
+            
+        # Avoides grape.ics.uci.edu - not useful
+        if domain == "grape.ics.uci.edu":
+            if "asterix" in path or "wiki/public/timeline" in path:
+                return False 
         
-        # Leads to data filed (?)
+        # Leads to data files (?)
         if "/~baldig/learning" in path:
             return False
         
@@ -80,7 +88,7 @@ def is_valid(url):
 # entry point 
 
         # checks for these php queries that can't be reached
-        if re.match(r".*(\?|&)(do|rev|media|idx|share)=.*", url.lower()):
+        if re.match(r".*(\?|&)(do|rev|media|idx|share|entry_point)=.*", url.lower()):
             return False
 
         return not re.match(
@@ -123,16 +131,4 @@ def is_valid(url):
 #     links += extract_next_links("https://ics.uci.edu/", response3) # ['https://ics.uci.edu/facts-figures/ics-mission-history/']
 #     links += extract_next_links("https://ics.uci.edu/", response4) # []
 #     print(links)
-# print(is_valid("https://wics.ics.uci.edu/")) # True
-# print(is_valid("https://ics.uci.edu/")) # True
-# print(is_valid("https://www.instagram.com/wicsuci/")) # False
-# print(is_valid("https://ics.uci.edu/event/building-worker-resilience-in-place-based-communities-amid-rapid-technological-change-april/")) #True
-# print(is_valid("https://grape.ics.uci.edu/"))
-# print(is_valid("https://ics.uci.edu/~eppstein/pix/action/index.html"))
 
-
-# print(is_valid("http://intranet.ics.uci.edu/doku.php/login?")) # True
-# print(is_valid("http://intranet.ics.uci.edu/doku.php/login?do=export_pdf&rev=1767734967")) # False
-# print(is_valid("http://intranet.ics.uci.edu/doku.php/login?do=diff&rev2%5B0%5D=1767734977&rev2%5B1%5D=1767735104&difftype=sidebyside"))
-# print(is_valid("https://dale-cooper-v0.ics.uci.edu/status?&lang=en&skin=skin-black&action=update&lang=en&skin=skin-black&action=update"))
-print(is_valid("https://wics.ics.uci.edu/fall-2025-week-8-wics-x-family-feud/?share=twitter"))
