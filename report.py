@@ -4,6 +4,7 @@ from urllib.parse import urlparse, urldefrag
 from bs4 import BeautifulSoup
 from scraper import URL_MAP, HTML_DIR
 
+REPORT = "report.txt"
 STOPWORDS = {
     "a", "about", "above", "after", "again", "against", "all", "am", "an", "and",
     "any", "are", "aren't", "as", "at", "be", "because", "been", "before", "being",
@@ -143,20 +144,21 @@ def get_subdomains():
     return sorted(subdomains.items())
 
 def generate_report():
-    unique_pages = get_unique_pages()
-    print(f"Unique pages: {unique_pages}\n")
+    with open(REPORT, "w") as f:
+        unique_pages = get_unique_pages()
+        print(f"Unique pages: {unique_pages}", file=f)
 
-    subdomains = get_subdomains()
-    print("Subdomains:")
-    for subdomain, count in subdomains:
-        print(f"{subdomain}, {count}")
-    
-    longest_url, longest_count = get_longest_page()
-    print(f"Longest page: {longest_url} ({longest_count} words)")
+        subdomains = get_subdomains()
+        print("\nSubdomains:", file=f)
+        for subdomain, count in subdomains:
+            print(f"{subdomain}, {count}", file=f)
 
-    print("Top 50 most common words:")
-    for word, count in get_top_50_words():
-        print(f"  {word} -> {count}")
+        longest_url, longest_count = get_longest_page()
+        print(f"\nLongest page: {longest_url} ({longest_count} words)", file=f)
+
+        print("\nTop 50 most common words:", file=f)
+        for word, count in get_top_50_words():
+            print(f"  {word} -> {count}", file=f)
 
 if __name__ == "__main__":
     generate_report()
