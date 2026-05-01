@@ -4,6 +4,7 @@ from urllib.parse import urlparse, urldefrag
 from bs4 import BeautifulSoup
 from scraper import URL_MAP, HTML_DIR
 
+REPORT = "report.txt"
 STOPWORDS = {
     "a", "about", "above", "after", "again", "against", "all", "am", "an", "and",
     "any", "are", "aren't", "as", "at", "be", "because", "been", "before", "being",
