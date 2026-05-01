@@ -49,16 +49,20 @@ def tokenize_text(text):
                 while current and current[-1] == "'":
                     current.pop()
                 if current:
-                    tokens.append("".join(current))
+                    token = "".join(current)
+                    if len(token) > 1:
+                        tokens.append(token)
                 current = []
         except Exception:
-            #skip unknown charaters
+            #skip unknown characters
             current = []
 
     while current and current[-1] == "'":
         current.pop()
     if current:
-        tokens.append("".join(current))
+        token = "".join(current)
+        if len(token) > 1:
+            tokens.append(token)
     return tokens
 
 def compute_word_frequencies(tokens):
