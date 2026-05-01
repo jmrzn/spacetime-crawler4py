@@ -76,6 +76,8 @@ def is_valid(url):
         if domain == "grape.ics.uci.edu":
             if "asterix" in path or "wiki/public/timeline" in path:
                 return False 
+            if "format=txt" in parsed.query: # filter out duplicates presented as txt file
+                return False
         
         # Leads to data files (?)
         if "/~baldig/learning" in path:
