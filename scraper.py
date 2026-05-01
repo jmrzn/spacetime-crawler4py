@@ -5,7 +5,7 @@ from hashlib import md5
 from urllib.parse import urlparse, urljoin, urldefrag
 from bs4 import BeautifulSoup
 
-MAX_SIZE = 1024 * 1024 * 15 # 15 MB
+MAX_SIZE = 1024 * 1024 * 5 # 5 MB, as the normal pages are below this number
 HTML_DIR = "pages"
 URL_MAP = "url_map.jsonl"
 
@@ -36,6 +36,8 @@ def extract_next_links(url, resp):
         if size and int(size) > MAX_SIZE:
             return []
     except ValueError:
+        pass
+    except TypeError:
         pass
     
     html = resp.raw_response.content
