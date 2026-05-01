@@ -65,13 +65,57 @@ def is_valid(url):
         if parsed.scheme not in set(["http", "https"]):
             return False
         
-        print(parsed.netloc.lower())
+        # print(parsed.path.lower())
+  
+        domain = parsed.netloc.lower()
 
-        # Only crawls in specified domains 
-        if not re.match(r".*\.(ics|cs|informatics|stat)\.uci\.edu$", parsed.netloc.lower()):
-            if not re.match(r"(ics|cs|informatics|stat)\.uci\.edu$", parsed.netloc.lower()):
+        # Only crawls in specified domains (first checks if domain under one of the specificed domains and then check if it is one of the main domains)
+        if not re.match(r".*\.(ics|cs|informatics|stat)\.uci\.edu$", domain):
+            if not re.match(r"(ics|cs|informatics|stat)\.uci\.edu$", domain):
                 return False
         
+        
+        # avoid this - behind a login, site itself isn't valuable, just a buch of queries
+        if domain == "dale-cooper-v0.ics.uci.edu":
+            return False
+        
+        # behind login
+        if domain == "helpdesk.ics.uci.edu":
+            return False
+        
+        path = parsed.path.lower()
+        # print(path)
+
+        # Bunch of wiki paths that are behind login
+        if domain == "wiki.ics.uci.edu":
+            if "services" in path or "requesttracker" in path or "network" in path or "hardware" in path or "group" in path:
+                return False
+            
+        # Avoides ngs.ics.uci.edu - not useful
+        if domain == "ngs.ics.uci.edu":
+            if "research" in path or "teaching" in path or "entrepreneurship" in path or "professionalsocial" in path:
+                return True 
+            return False
+            
+        # Avoides grape.ics.uci.edu - not useful
+        if domain == "grape.ics.uci.edu":
+            if "asterix" in path or "wiki/public/timeline" in path:
+                return False 
+        
+        # Leads to data files (?)
+        if "/~baldig/learning" in path:
+            return False
+        
+        # Avoid events (calendar) links, eppstein/pix (bunch of picture links)
+        if "/events/" in path or "/~eppstein/pix/" in path:
+            return False
+        
+# entry point 
+
+        # checks for these php queries that can't be reached
+        if re.match(r".*(\?|&)(do|rev|media|idx|share|entry_point)=.*", url.lower()):
+            return False
+
         return not re.match(
             r".*\.(css|js|bmp|gif|jpe?g|ico"
             + r"|png|tiff?|mid|mp2|mp3|mp4"
@@ -80,7 +124,7 @@ def is_valid(url):
             + r"|data|dat|exe|bz2|tar|msi|bin|7z|psd|dmg|iso"
             + r"|epub|dll|cnf|tgz|sha1"
             + r"|thmx|mso|arff|rtf|jar|csv"
-            + r"|rm|smil|wmv|swf|wma|zip|rar|gz)$", parsed.path.lower())
+            + r"|rm|smil|wmv|swf|wma|zip|rar|gz)$", path)
 
     except TypeError:
         print ("TypeError for ", parsed)
