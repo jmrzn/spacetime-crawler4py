@@ -4,7 +4,6 @@ from urllib.parse import urlparse, urldefrag
 from bs4 import BeautifulSoup
 from scraper import URL_MAP, HTML_DIR
 
-REPORT = "report.txt"
 STOPWORDS = {
     "a", "about", "above", "after", "again", "against", "all", "am", "an", "and",
     "any", "are", "aren't", "as", "at", "be", "because", "been", "before", "being",
@@ -26,6 +25,12 @@ STOPWORDS = {
     "why", "why's", "with", "won't", "would", "wouldn't", "you", "you'd", "you'll",
     "you're", "you've", "your", "yours", "yourself", "yourselves",
 }
+
+#helper function that TA reccomended for getting just the text content for the 50 most common words
+def get_page_text(soup):
+    for tag in soup.find_all(["script", "style"]):
+        tag.decompose()
+    return soup.get_text(separator=" ")
 
 def tokenize_text(text):
     tokens = []
@@ -73,7 +78,7 @@ def get_top_50_words():
         try:
             with open(path, "r", encoding="utf-8", errors="replace") as fh:
                 soup = BeautifulSoup(fh.read(), "html.parser")
-            tokens = tokenize_text(soup.get_text(separator=" "))
+            tokens = tokenize_text(get_page_text(soup))
             for word, count in compute_word_frequencies(tokens).items():
                 combined_frequencies[word] = combined_frequencies.get(word, 0) + count
         except Exception:
@@ -103,7 +108,7 @@ def get_longest_page():
         try:
             with open(path, "r", encoding="utf-8", errors="replace") as fh:
                 soup = BeautifulSoup(fh.read(), "html.parser")
-            count = len(tokenize_text(soup.get_text(separator=" ")))
+            count = len(tokenize_text(get_page_text(soup)))
             if count > longest_count:
                 longest_count = count
                 url = path_to_url.get(path, path)
