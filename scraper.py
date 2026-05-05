@@ -93,9 +93,8 @@ def is_valid(url):
             
         # Avoides ngs.ics.uci.edu - not useful
         if domain == "ngs.ics.uci.edu":
-            if "research" in path or "teaching" in path or "entrepreneurship" in path or "professionalsocial" in path:
-                return True 
-            return False
+            if "research" not in path and "teaching" not in path and "entrepreneurship" not in path and "professionalsocial" not in path:
+                return False
             
         # Avoides grape.ics.uci.edu - not useful
         if domain == "grape.ics.uci.edu":
