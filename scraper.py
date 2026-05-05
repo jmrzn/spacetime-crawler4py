@@ -101,6 +101,19 @@ def is_valid(url):
         if domain == "grape.ics.uci.edu":
             if "asterix" in path or "wiki/public/timeline" in path:
                 return False 
+            if "format=txt" in parsed.query: # filter out duplicates presented as txt file
+                return False
+            # attempts to filter out similar versions
+            if "action=diff" not in parsed.query:
+                version = re.search(r"version=(\d+)", parsed.query)
+                if version and int(version.group(1)) % 2 == 0: # filters out even versions
+                    return False
+                season = re.search(r"(fall|spring|winter)\?", url.lower())
+                if version: # filters out old versions
+                    if season and int(version.group(1)) < 60:
+                        return False
+                    if not season and int(version.group(1)) < 5:
+                        return False
         
         # Leads to data files (?)
         if "/~baldig/learning" in path:
