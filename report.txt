@@ -1,0 +1,161 @@
+Unique pages: 9245
+
+Subdomains:
+accessibility.ics.uci.edu, 6
+acoi.ics.uci.edu, 112
+archive-beta.ics.uci.edu, 11
+archive.ics.uci.edu, 220
+asterix.ics.uci.edu, 7
+betapro.proteomics.ics.uci.edu, 4
+bit.ics.uci.edu, 1
+cdb.ics.uci.edu, 48
+cert.ics.uci.edu, 34
+checkin.ics.uci.edu, 9
+chemdb.ics.uci.edu, 47
+chenli.ics.uci.edu, 10
+cloudberry.ics.uci.edu, 8
+cml.ics.uci.edu, 265
+code.ics.uci.edu, 14
+computableplant.ics.uci.edu, 118
+containers.ics.uci.edu, 1
+courselisting.ics.uci.edu, 4
+create.ics.uci.edu, 4
+cs.ics.uci.edu, 12
+cs.uci.edu, 1
+deeprxn.ics.uci.edu, 31
+dgillen.ics.uci.edu, 32
+ds4all.ics.uci.edu, 9
+duttgroup.ics.uci.edu, 139
+dynamo.ics.uci.edu, 32
+e2.ics.uci.edu, 2
+edgelab.ics.uci.edu, 7
+elms.ics.uci.edu, 3
+emj.ics.uci.edu, 45
+evoke.ics.uci.edu, 4
+fellowships.ics.uci.edu, 3
+flamingo.ics.uci.edu, 29
+fr.ics.uci.edu, 3
+futurehealth.ics.uci.edu, 149
+gitlab.ics.uci.edu, 3
+gradinfo.ics.uci.edu, 3
+grape.ics.uci.edu, 3249
+graphics.ics.uci.edu, 1
+hack.ics.uci.edu, 1
+hobbes.ics.uci.edu, 11
+hpi.ics.uci.edu, 5
+hub.ics.uci.edu, 4
+i-sensorium.ics.uci.edu, 5
+iasl.ics.uci.edu, 1
+icde2023.ics.uci.edu, 46
+ics.uci.edu, 1229
+industryshowcase.ics.uci.edu, 24
+informatics.ics.uci.edu, 27
+informatics.uci.edu, 7
+intranet.ics.uci.edu, 16
+ipubmed.ics.uci.edu, 1
+isg.ics.uci.edu, 273
+jgarcia.ics.uci.edu, 40
+julia-hub.ics.uci.edu, 2
+luci.ics.uci.edu, 4
+mailman.ics.uci.edu, 38
+malek.ics.uci.edu, 1
+mcs.ics.uci.edu, 12
+mdogucu.ics.uci.edu, 1
+mds.ics.uci.edu, 9
+mhcid.ics.uci.edu, 19
+mlphysics.ics.uci.edu, 154
+mover.ics.uci.edu, 24
+mswe.ics.uci.edu, 10
+mupro.proteomics.ics.uci.edu, 3
+myip.ics.uci.edu, 1
+nalini.ics.uci.edu, 7
+netreg.ics.uci.edu, 3
+oai.ics.uci.edu, 6
+onboarding.ics.uci.edu, 4
+password.ics.uci.edu, 9
+pepito.proteomics.ics.uci.edu, 5
+psearch.ics.uci.edu, 1
+radicle.ics.uci.edu, 6
+riscit.ics.uci.edu, 1
+scale.ics.uci.edu, 7
+scratch.proteomics.ics.uci.edu, 4
+seal.ics.uci.edu, 50
+selectpro.proteomics.ics.uci.edu, 7
+sherlock.ics.uci.edu, 7
+signage.ics.uci.edu, 3
+speedtest.ics.uci.edu, 1
+staging-hub.ics.uci.edu, 2
+stairs.ics.uci.edu, 3
+stat.ics.uci.edu, 11
+stat.uci.edu, 2
+summeracademy.ics.uci.edu, 13
+support.ics.uci.edu, 13
+swiki.ics.uci.edu, 222
+tad.ics.uci.edu, 3
+tastier.ics.uci.edu, 1
+tutoring.ics.uci.edu, 5
+unite.ics.uci.edu, 10
+vision.ics.uci.edu, 213
+wics.ics.uci.edu, 363
+wiki.ics.uci.edu, 189
+www-db.ics.uci.edu, 25
+www.cs.uci.edu, 3
+www.ics.uci.edu, 1364
+www.informatics.ics.uci.edu, 6
+www.informatics.uci.edu, 17
+www.stat.uci.edu, 5
+xtune.ics.uci.edu, 6
+
+Longest page: http://www.ics.uci.edu/~shantas/publications/19-privacy_smart_home_codaspy.ppsx (279373 words)
+
+Top 50 most common words:
+  project -> 22940
+  ics -> 20339
+  uci -> 18986
+  will -> 18846
+  10 -> 18600
+  data -> 15851
+  can -> 13748
+  years -> 13194
+  trac -> 12264
+  use -> 11827
+  https -> 11581
+  file -> 11337
+  information -> 11299
+  wiki -> 11287
+  http -> 11238
+  us -> 11197
+  research -> 11068
+  ago -> 10598
+  search -> 10567
+  added -> 10510
+  changes -> 10316
+  learning -> 10245
+  edu -> 10243
+  pdf -> 10153
+  com -> 9940
+  using -> 9709
+  software -> 9698
+  ppt -> 9494
+  computer -> 9351
+  11 -> 9162
+  change -> 9092
+  version -> 8804
+  students -> 8690
+  page -> 8689
+  kb -> 8535
+  science -> 8438
+  pm -> 8348
+  university -> 8342
+  cs122b -> 8273
+  systems -> 8258
+  values -> 7818
+  2017 -> 7728
+  time -> 7590
+  new -> 7384
+  machine -> 7221
+  2018 -> 7199
+  irvine -> 7188
+  show -> 6987
+  insert -> 6977
+  uu -> 6923
